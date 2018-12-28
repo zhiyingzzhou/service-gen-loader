@@ -1,0 +1,45 @@
+{
+    "properties": {
+        "fileName": {
+            "anyof": [
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "declareFileName": {
+            "anyof": [
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "filePath": {
+            "anyof": [
+                {
+                    "type": "string"
+                },
+                {
+                    "instanceof": "Function"
+                }
+            ]
+        },
+        "declareFilePath": {
+            "anyof": [
+                {
+                    "type": "string"
+                },
+                {
+                    "instanceof": "Function"
+                }
+            ]
+        }
+    },
+    "errorMessages": {
+        "fileName": "should be {String}",
+        "declareFileName": "should be {String}",
+        "filePath": "should be {String} or {Function}",
+        "declareFilePath": "should be {String} or {Function}"
+    },
+    "type": "object"
+}
