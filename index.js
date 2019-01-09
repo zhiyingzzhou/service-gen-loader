@@ -9,11 +9,15 @@ const schema = require('./options.json');
 const template = require('./template');
 const dts = require('./dts-template');
 
-const camelcase =  str => {
+const constantcase = str => {
+    return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toUpperCase()
+}
+
+const camelcase = str => {
     return str.toLowerCase()
         .replace(/[-_]+/g, ' ')
         .replace(/[^\w\s]/g, '')
-        .replace(/ (.)/g, function ($1) {
+        .replace(/ (.)/g, function($1) {
             return $1.toUpperCase();
         })
         .replace(/\s+/g, '');
@@ -32,21 +36,21 @@ module.exports = function(content, stats) {
     // cache loader
     this.cacheable();
 
-    let fileName = '', 
-        declareFileName = '', 
+    let fileName = '',
+        declareFileName = '',
         filePath = '',
         declareFilePath = '',
         ext = path.extname(options.fileName);
 
-    if(options.fileName) {
+    if (options.fileName) {
         fileName = options.fileName;
     } else {
         this.emitError(new Error("fileName option can't be null"));
     }
 
 
-    if(options.filePath) {
-        if(typeof options.filePath === 'function') {
+    if (options.filePath) {
+        if (typeof options.filePath === 'function') {
             filePath = path.posix.join(options.filePath(this), fileName);
         } else {
             filePath = path.posix.join(options.filePath, fileName);
@@ -56,14 +60,14 @@ module.exports = function(content, stats) {
         filePath = path.posix.join(context, fileName);
     }
 
-    if(options.declareFileName) {
+    if (options.declareFileName) {
         declareFileName = options.declareFileName;
     } else {
         declareFileName = fileName.replace(ext, '.d.ts');
     }
 
-    if(options.declareFilePath) {
-        if(typeof options.filePath === 'function') {
+    if (options.declareFilePath) {
+        if (typeof options.filePath === 'function') {
             declareFilePath = path.posix.join(options.declareFilePath(this), declareFileName);
         } else {
             declareFilePath = path.posix.join(options.declareFilePath, declareFileName);
@@ -74,14 +78,16 @@ module.exports = function(content, stats) {
 
     const mappings = JSON.parse(content.replace(/;/g, ''));
 
-    let serviceStr = "", dtsStr = '', tableData = [];
+    let serviceStr = "",
+        dtsStr = '',
+        tableData = [];
 
-    mappings.forEach((item,index)=>{
+    mappings.forEach((item, index) => {
         const { name, url, method, gateway = '', headers = {}, description = '' } = item;
 
         const last = url.split('/').pop();
 
-        const funcname = name || camelcase('api_' + last);;
+        const funcname = name || camelcase('api_' + constantcase(last));
 
         tableData[index] = {
             "request-url": url,

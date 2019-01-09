@@ -1,4 +1,4 @@
-module.exports = function (dts) {
+module.exports = function(dts) {
     return `
 export interface Service {
     ${dts}
