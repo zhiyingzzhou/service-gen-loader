@@ -1,0 +1,29 @@
+{
+  "name": "service-gen-loader",
+  "version": "0.0.2",
+  "description": "service template  generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhiyingzzhou/service-gen-loader.git"
+  },
+  "keywords": [
+    "webpack-loader",
+    "loader"
+  ],
+  "author": "zhiyingzzhou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhiyingzzhou/service-gen-loader/issues"
+  },
+  "homepage": "https://github.com/zhiyingzzhou/service-gen-loader#readme",
+  "devDependencies": {
+    "chalk": "^2.4.1",
+    "console.table": "^0.10.0",
+    "loader-utils": "^1.2.3",
+    "schema-utils": "^1.0.0"
+  }
+}
