@@ -95,13 +95,15 @@ module.exports = function(content, stats) {
         }
 
         serviceStr += `
-            ${funcname}(data = {}) {
-                return Service.ajaxCommon({
+            ${funcname}(data = {}, options = {}) {
+                let params = $.extend({}, {
                     url: (config["${gateway}"] || '') + "${url}",
                     method: "${method}",
                     data,
                     headers: ${JSON.stringify(headers)}
-                });
+                }, options);
+
+                return Service.ajaxCommon(params);
             },
         `;
         dtsStr += `
@@ -112,7 +114,7 @@ module.exports = function(content, stats) {
              */
             `
             }
-            ${funcname}(data: any): this;
+            ${funcname}(data: Object, options: Object): this;
         `
     });
 
