@@ -96,7 +96,7 @@ module.exports = function(content, stats) {
 
         serviceStr += `
             ${funcname}(data = {}, options = {}) {
-                let params = $.extend({}, {
+                let params = Object.assign({}, {
                     url: (config["${gateway}"] || '') + "${url}",
                     method: "${method}",
                     data,
