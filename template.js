@@ -1,11 +1,11 @@
-module.exports = function(declareFilePath, services) {
+module.exports = function (declareFilePath, services) {
     return `
 /// <reference path="${declareFilePath}" />
 const config = require('./config');
-const ajax = require('./ajax');
+const request = require('./ajax');
+const gateway = require('./gateway');
 
 const Service = {
-    ...ajax,
     ${services}
 };
 

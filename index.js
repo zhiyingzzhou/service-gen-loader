@@ -17,7 +17,7 @@ const camelcase = str => {
     return str.toLowerCase()
         .replace(/[-_]+/g, ' ')
         .replace(/[^\w\s]/g, '')
-        .replace(/ (.)/g, function($1) {
+        .replace(/ (.)/g, function ($1) {
             return $1.toUpperCase();
         })
         .replace(/\s+/g, '');
@@ -27,7 +27,7 @@ const emitFile = (path, content) => {
     fs.writeFileSync(path, content);
 }
 
-module.exports = function(content, stats) {
+module.exports = function (content, stats) {
     const options = loaderUtils.getOptions(this);
     const context = this.context;
     // validate options
@@ -83,7 +83,14 @@ module.exports = function(content, stats) {
         tableData = [];
 
     mappings.forEach((item, index) => {
-        const { name, url, method, gateway = '', headers = {}, description = '' } = item;
+        const {
+            name,
+            url,
+            method,
+            gateway = '',
+            headers = {},
+            description = ''
+        } = item;
 
         const last = url.split('/').pop();
 
@@ -97,13 +104,11 @@ module.exports = function(content, stats) {
         serviceStr += `
             ${funcname}(data = {}, options = {}) {
                 let params = Object.assign({}, {
-                    url: (config["${gateway}"] || '') + "${url}",
                     method: "${method}",
-                    data,
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return Service.ajaxCommon(params);
+                return request["${method.toLowerCase()}"](gateway["${gateway}"]("${url}"),data,params);
             },
         `;
         dtsStr += `
