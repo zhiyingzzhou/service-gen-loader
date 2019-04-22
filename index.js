@@ -89,9 +89,7 @@ module.exports = function (content, stats) {
             url,
             method,
             gateway = '',
-            headers = {
-                "Content-Type": "application/json"
-            },
+            headers = {},
             description = ''
         } = item;
 
@@ -102,6 +100,14 @@ module.exports = function (content, stats) {
         tableData[index] = {
             "request-url": url,
             "function-name": chalk.green(funcname)
+        }
+
+        if (!item.headers) {
+            item.headers = {}
+        }
+
+        if (!headers['Content-Type']) {
+            headers['Content-Type'] = "application/json"
         }
 
         serviceStr += `
