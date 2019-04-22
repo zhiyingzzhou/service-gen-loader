@@ -3,7 +3,7 @@
 **install**
 
 ```console
-$ npm install service-gen-loader --save-dev
+$ yarn add service-gen-loader -D
 ```
 
 **service-mapping.json**
