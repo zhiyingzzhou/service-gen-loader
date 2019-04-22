@@ -84,6 +84,7 @@ module.exports = function (content, stats) {
 
     mappings.forEach((item, index) => {
         const {
+            alias,
             name,
             url,
             method,
@@ -94,7 +95,7 @@ module.exports = function (content, stats) {
 
         const last = url.split('/').pop();
 
-        const funcname = name || camelcase('api_' + constantcase(last));
+        const funcname = alias || name || camelcase('api_' + constantcase(last));
 
         tableData[index] = {
             "request-url": url,
