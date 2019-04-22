@@ -89,7 +89,9 @@ module.exports = function (content, stats) {
             url,
             method,
             gateway = '',
-            headers = {},
+            headers = {
+                "Content-Type": "application/json"
+            },
             description = ''
         } = item;
 
