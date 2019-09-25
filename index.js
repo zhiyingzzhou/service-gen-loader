@@ -90,7 +90,8 @@ module.exports = function (content, stats) {
             method,
             gateway = '',
             headers = {},
-            description = ''
+            description = '',
+            mock,
         } = item;
 
         const last = url.split('/').pop();
@@ -117,7 +118,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](gateway["${gateway}"]("${url}"),data,params);
+                return request["${method.toLowerCase()}"](${mock ? '' : `gateway["${gateway}"]`}("${url}"),data,params);
             },
         `;
         dtsStr += `
