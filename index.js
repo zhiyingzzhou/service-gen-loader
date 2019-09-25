@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const schema = require('./options.json');
 const template = require('./template');
 const dts = require('./dts-template');
+const ip = require('ip');
 
 const { DEPLOY_ENV } = process.env;
 
@@ -120,7 +121,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? '' : `gateway["${gateway}"]`}("${url}"),data,params);
+                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `"http://${ip.address()}:${options.port || 8080}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
             },
         `;
         dtsStr += `
