@@ -101,7 +101,7 @@ module.exports = function (content, stats) {
 
         tableData[index] = {
             "request-url": url,
-            "function-name": chalk.green(funcname)
+            "function-name": funcname
         }
 
         if (!item.headers) {
@@ -119,7 +119,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `${options.domain}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
+                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `"${options.domain}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
             },
         `;
         dtsStr += `
