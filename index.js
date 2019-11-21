@@ -98,6 +98,7 @@ module.exports = function (content, stats) {
         const last = url.split('/').pop();
 
         const funcname = alias || name || camelcase('api_' + constantcase(last));
+        const mockUrl = alias || name ? `/${alias || name}` : ''
 
         tableData[index] = {
             "request-url": url,
@@ -119,7 +120,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `"${options.domain}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
+                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `"${options.domain}${mockUrl || url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
             },
         `;
         dtsStr += `
