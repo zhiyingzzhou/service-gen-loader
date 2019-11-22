@@ -3,11 +3,12 @@ const path = require('path');
 const fs = require('fs');
 const loaderUtils = require('loader-utils');
 const validateOptions = require('schema-utils');
-const cTable = require('console.table');
 const chalk = require('chalk');
 const schema = require('./options.json');
 const template = require('./template');
 const dts = require('./dts-template');
+
+const { NODE_ENV } = process.env;
 
 const constantcase = str => {
     return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toUpperCase()
@@ -90,16 +91,18 @@ module.exports = function (content, stats) {
             method,
             gateway = '',
             headers = {},
-            description = ''
+            description = '',
+            mock,
         } = item;
 
         const last = url.split('/').pop();
 
         const funcname = alias || name || camelcase('api_' + constantcase(last));
+        const mockUrl = alias || name ? `/${alias || name}` : ''
 
         tableData[index] = {
             "request-url": url,
-            "function-name": chalk.green(funcname)
+            "function-name": funcname
         }
 
         if (!item.headers) {
@@ -117,7 +120,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](gateway["${gateway}"]("${url}"),data,params);
+                return request["${method.toLowerCase()}"](${mock && NODE_ENV !== 'prd' ? `"${options.domain}${mockUrl || url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
             },
         `;
         dtsStr += `
