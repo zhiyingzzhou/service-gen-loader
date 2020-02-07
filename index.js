@@ -8,7 +8,7 @@ const schema = require('./options.json');
 const template = require('./template');
 const dts = require('./dts-template');
 
-const { DEPLOY_ENV } = process.env;
+const { NODE_ENV } = process.env;
 
 const constantcase = str => {
     return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toUpperCase()
@@ -98,7 +98,6 @@ module.exports = function (content, stats) {
         const last = url.split('/').pop();
 
         const funcname = alias || name || camelcase('api_' + constantcase(last));
-        const mockUrl = alias || name ? `/${alias || name}` : ''
 
         tableData[index] = {
             "request-url": url,
@@ -120,7 +119,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-                return request["${method.toLowerCase()}"](${mock && DEPLOY_ENV !== 'prd' ? `"${options.domain}${mockUrl || url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
+                return request["${method.toLowerCase()}"](${mock && NODE_ENV !== 'production' ? `"${options.domain}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
             },
         `;
         dtsStr += `
