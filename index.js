@@ -119,11 +119,7 @@ module.exports = function (content, stats) {
                     headers: ${JSON.stringify(headers)}
                 }, options);
 
-<<<<<<< HEAD
                 return request["${method.toLowerCase()}"](${mock && NODE_ENV !== 'production' ? `"${options.domain}${url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
-=======
-                return request["${method.toLowerCase()}"](${mock && NODE_ENV !== 'production' ? `"${options.domain}${mockUrl || url}"` : `gateway["${gateway}"]("${url}")`} , data, params);
->>>>>>> d7eb024ef0dbaabccd5d145ac3afd410450fd0db
             },
         `;
         dtsStr += `
