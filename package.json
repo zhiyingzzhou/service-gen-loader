@@ -23,7 +23,7 @@
   "devDependencies": {
     "chalk": "^2.4.1",
     "console.table": "^0.10.0",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^3.2.1",
     "schema-utils": "^1.0.0"
   }
 }
